@@ -49,7 +49,7 @@ def show_students_records():
         cur = conn.cursor()
         cur.execute("SELECT * FROM students")
         results = cur.fetchall()
-    return jsonify('results.html')
+    return jsonify(results)
 
 
 
