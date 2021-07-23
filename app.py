@@ -1,5 +1,6 @@
 import sqlite3
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+
 
 def init_sqlite_db():
     conn = sqlite3.connect('database.db')
@@ -41,20 +42,14 @@ def add_new_record():
             conn.close()
             return render_template('result.html', msg=msg)
 
-@app.route('/show-records/', methods=['GET'])
-def show_records():
-    records = []
-    try:
-        with sqlite3.connect('database.db') as conn:
-            cur = conn.cursor()
-            cur.execute('SELECT * FROM students')
-            records = cur.fetchall()
-    except Exception as e:
-        conn.rollback()
-        print("There was an error fetching results from the database.")
-    finally:
-        conn.close()
-        return render_template('records.html', records=records)
+@app.route('/show-student-records/')
+def show_students_records():
+
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM students")
+        results = cur.fetchall()
+    return jsonify('results.html')
 
 
 
