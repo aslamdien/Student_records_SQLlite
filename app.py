@@ -49,8 +49,8 @@ def show_records():
         with sqlite3.connect('database.db') as conn:
             cur = conn.cursor()
             cur.execute("SELECT * FROM students")
-            results = cur.fetchall()
-        return jsonify(results)
+            records = cur.fetchall()
+        return jsonify(records)
 
     except Exception as e:
         conn.rollback()
