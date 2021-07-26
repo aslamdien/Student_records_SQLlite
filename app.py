@@ -1,6 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, request, jsonify
-
+from flask import Flask, render_template, request
 
 def init_sqlite_db():
     conn = sqlite3.connect('database.db')
@@ -37,7 +36,7 @@ def add_new_record():
 
         except Exception as e:
             conn.rollback()
-            msg = 'Error Occured During The INSERT: ' + e
+            msg = 'Error Occured During The INSERT: '
         finally:
             conn.close()
             return render_template('result.html', msg=msg)
@@ -50,8 +49,6 @@ def show_records():
             cur = conn.cursor()
             cur.execute("SELECT * FROM students")
             records = cur.fetchall()
-        return jsonify(records)
-
     except Exception as e:
         conn.rollback()
         print("There was an error fetching results from the database.")
